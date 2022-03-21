@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Testing POC Project">
+    <listeners>
+        <listener class-name="com.selenium.pocclasses.UtilityFunctions.SnapShotListener"/>
+    </listeners>
+    <test preserve-order="true" name="Regression">
+        <classes>
+            <class name="com.selenium.test.TestClass"/>
+        </classes>
+    </test>
+</suite>
