@@ -20,8 +20,8 @@ public class TestClass extends Base {
     public void testJoinUs()
     {
         PageClassTest objPageClassTes=new PageClassTest(drivr);
-        extLogger=extReport.startTest("Join Us");
-        //Assert.assertTrue(objPageClassTes.clickJoinNow(),"tested join now");
-        System.out.println("Testing testing");
+        extLogger=extReport.startTest("Customer Front End");
+        Assert.assertTrue(objPageClassTes.navigateToCustomerFrontEndPage(),"Testing Customer login Page navigation");
+        //System.out.println("Testing testing");
     }
 }

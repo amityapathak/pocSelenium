@@ -2,7 +2,7 @@ package com.selenium.pocclasses.UtilityFunctions;
 
 public class Constants {
     //Application url
-    public  static final  String ApplicationURL_TestCloud_Guest="https://demoqa.com/";
+    public  static final  String ApplicationURL_TestCloud_Guest="https://phptravels.com/demo/";
     public  static final  String ApplicationURL_TestCloud_Guest_ChooseDevice="url2";
     public  static final  String ApplicationURL_TestCloud_B2B="url3";
     public  static final  String ApplicationURL_TestCloud_NR="url4";

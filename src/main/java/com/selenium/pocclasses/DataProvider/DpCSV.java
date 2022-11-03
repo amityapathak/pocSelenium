@@ -2,6 +2,8 @@ package com.selenium.pocclasses.DataProvider;
 
 
 import com.selenium.pocclasses.Base.Base;
+import com.selenium.pocclasses.UtilityFunctions.Utils;
+import com.opencsv.CSVWriter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -190,6 +192,332 @@ public class DpCSV {
         }
         return sRetnCellValue;
 
+    }
+    /******************************************************************
+     Method Name : getICCIDDataFromInputCSVFileAndUpdate
+     Parameters: csvFileName
+     Description :This method is used the fetch the data from CSV input file
+     ******************************************************/
+    public String getICCIDDataFromInputCSVFileAndUpdate(String sCSVFileName)
+    {
+        String strpath=Base.objDpConfig.getCurrentDirectory()+Base.objDpConfig.getConfigData("TestDatapatha")+sCSVFileName;
+        BufferedReader bufferedReader=null;
+        String sLine="";
+        int iRowNum=1;
+        int iColuNum=0;
+        int iCount=0;
+        String sCSVSplitBy=",";
+        String[] cvsData=null;
+        String sColValue=null;
+        String sRetnCellValue=null;
+        String[] cvsRecord=null;
+        List<String[]> csvBody=new ArrayList<>();
+
+        try
+        {
+            bufferedReader=new BufferedReader(new FileReader(strpath));
+            do{
+                sLine=bufferedReader.readLine();
+                if (sLine==null)
+                {
+                    break;
+                }
+                else
+                {
+                    sLine=sLine.replace("\"","");
+                    if (((!sLine.contains("yes"))) && iCount==0){
+                        cvsData=sLine.split(sCSVSplitBy);
+                        sColValue=cvsData[iColuNum];
+                        sRetnCellValue=sColValue.trim();
+                        cvsRecord=new  String[] {sRetnCellValue,"Yes"};
+                        iCount++;
+
+                }else
+                    {
+                        cvsRecord=sLine.split(sCSVSplitBy);
+                    }
+                }
+                iRowNum++;
+                csvBody.add(cvsRecord);
+            }
+            while ((sLine!=null) && iRowNum>1);
+            if (sRetnCellValue==null)
+            {
+                Utils.addLog("FAIL","Need to add ICCID on respective CSV File");
+            }
+            else
+            {
+                Utils.addLog("INFO","ICCID found as:"+sRetnCellValue);
+            }
+            bufferedReader.close();
+            CSVWriter writer=new CSVWriter(new FileWriter(strpath));
+            writer.writeAll(csvBody);
+            writer.flush();
+            writer.close();
+
+        }
+        catch (Exception e)
+        {
+            Utils.addLog("FAIL",e.getMessage());
+        }
+        return  sRetnCellValue;
+
+    }
+
+    public String getDataFromCSVFile(String sCSVFileName)
+    {
+        String strPath=Base.objDpConfig.getCurrentDirectory()+Base.objDpConfig.getConfigData("TestDataPath")+sCSVFileName;
+        BufferedReader bufferedReader=null;
+        String sLine="";
+       int iRowNum=1;
+       int iColNum=0;
+       int iCount=0;
+
+       String sCSVSplitBy=",";
+       String[] cvsData=null;
+       String sColValue=null;
+       String sRetnCellValue=null;
+       String[] cvsRecord=null;
+       List<String[]> csvBody=new ArrayList<>();
+       try
+       {
+           bufferedReader=new BufferedReader(new FileReader(strPath));
+           do
+           {
+               sLine=bufferedReader.readLine();
+               if(sLine==null)
+               {
+                   break;
+               }
+               else
+               {
+                   sLine=sLine.replace("\"","");
+                   if((!(sLine.contains("Yes"))) && iCount==0)
+                   {
+                       cvsData=sLine.split(sCSVSplitBy);
+                       sColValue=cvsData[iColNum];
+                       sRetnCellValue=sColValue.trim();
+                       iCount++;
+
+                   }
+                   else
+                   {
+                       cvsRecord=sLine.split(sCSVSplitBy);
+                   }
+               }
+               iRowNum++;
+               csvBody.add(cvsRecord);
+           }
+           while ((sLine!=null)&& iRowNum>1);
+           if (sRetnCellValue==null)
+           {
+               Utils.addLog("FAIL","Need to add data to the csv file");
+           }
+           else
+           {
+               Utils.addLog("INFO","data found "+sRetnCellValue);
+           }
+           bufferedReader.close();
+       }
+       catch (Exception e)
+       {
+           Utils.addLog("FAIL",e.getMessage());
+       }
+       return  sRetnCellValue;
+
+    }
+    public  void  markUsedDataInCsvFile(String sCSVFileName)
+    {
+        String strPath=Base.objDpConfig.getCurrentDirectory()+Base.objDpConfig.getConfigData("TestDataPath")+sCSVFileName;
+        BufferedReader bufferedReader=null;
+        String sLine="";
+        int iRowNum=1;
+        int iColNum=0;
+        int iCount=0;
+
+        String sCSVSplitBy=",";
+        String[] cvsData=null;
+        String sColValue=null;
+        String sRetnCellValue=null;
+        String[] cvsRecord=null;
+        List<String[]> csvBody=new ArrayList<>();
+        try
+        {
+            bufferedReader=new BufferedReader(new FileReader(strPath));
+            do
+            {
+                sLine=bufferedReader.readLine();
+                if(sLine==null)
+                {
+                    break;
+                }
+                else
+                {
+                    sLine=sLine.replace("\"","");
+                    if((!(sLine.contains("Yes"))) && iCount==0)
+                    {
+                        cvsData=sLine.split(sCSVSplitBy);
+                        sColValue=cvsData[iColNum];
+                        sRetnCellValue=sColValue.trim();
+                        cvsRecord=new  String[]{sRetnCellValue,"Yes"};
+                        iCount++;
+
+                    }
+                    else
+                    {
+                        cvsRecord=sLine.split(sCSVSplitBy);
+                    }
+                }
+                iRowNum++;
+                csvBody.add(cvsRecord);
+            }
+            while ((sLine!=null)&& iRowNum>1);
+            if (sRetnCellValue==null)
+            {
+                Utils.addLog("FAIL","Need to add data to the csv file");
+            }
+            else
+            {
+                Utils.addLog("INFO","data found "+sRetnCellValue);
+            }
+            bufferedReader.close();
+            CSVWriter writer=new CSVWriter(new FileWriter(strPath));
+            writer.writeAll(csvBody);
+            writer.flush();
+            writer.close();
+        }
+        catch (Exception e)
+        {
+            Utils.addLog("FAIL",e.getMessage());
+        }
+
+    }
+    public void markMultipleUsedDataInCsvFile(String sCSVFileName ,int iLoopCount)
+    {
+        String strPath=Base.objDpConfig.getCurrentDirectory()+Base.objDpConfig.getConfigData("TestDataPath")+sCSVFileName;
+        BufferedReader bufferedReader=null;
+        String sLine="";
+        int iRowNum=1;
+        int iColNum=0;
+        int iCount=0;
+
+        String sCSVSplitBy=",";
+        String[] cvsData=null;
+        String sColValue=null;
+        String sRetnCellValue=null;
+        String[] cvsRecord=null;
+        List<String[]> csvBody=new ArrayList<>();
+        try
+        {
+            bufferedReader=new BufferedReader(new FileReader(strPath));
+            do
+            {
+                sLine=bufferedReader.readLine();
+                if(sLine==null)
+                {
+                    break;
+                }
+                else
+                {
+                    sLine=sLine.replace("\"","");
+                    if((!(sLine.contains("Yes"))) && iCount==0)
+                    {
+                        cvsData=sLine.split(sCSVSplitBy);
+                        sColValue=cvsData[iColNum];
+                        sRetnCellValue=sColValue.trim();
+                        cvsRecord=new  String[]{sRetnCellValue,"Yes"};
+                        iCount++;
+
+                    }
+                    else
+                    {
+                        cvsRecord=sLine.split(sCSVSplitBy);
+                    }
+                }
+                iRowNum++;
+                csvBody.add(cvsRecord);
+            }
+            while ((sLine!=null)&& iRowNum>1);
+            if (sRetnCellValue==null)
+            {
+                Utils.addLog("FAIL","Need to add data to the csv file");
+            }
+            else
+            {
+                Utils.addLog("INFO","data found "+sRetnCellValue);
+            }
+            bufferedReader.close();
+            CSVWriter writer=new CSVWriter(new FileWriter(strPath));
+            writer.writeAll(csvBody);
+            writer.flush();
+            writer.close();
+        }
+        catch (Exception e)
+        {
+            Utils.addLog("FAIL",e.getMessage());
+        }
+    }
+    public String getMultipleDataFromCsvFile(String sCSVFileName ,int iLoopCount)
+    {
+        String strPath=Base.objDpConfig.getCurrentDirectory()+Base.objDpConfig.getConfigData("TestDataPath")+sCSVFileName;
+        BufferedReader bufferedReader=null;
+        String sLine="";
+        int iRowNum=1;
+        int iColNum=0;
+        int iCount=0;
+
+        String sCSVSplitBy=",";
+        String[] cvsData=null;
+        String sColValue=null;
+        String sRetnCellValue=null;
+        String[] cvsRecord=null;
+        List<String[]> csvBody=new ArrayList<>();
+        try
+        {
+            bufferedReader=new BufferedReader(new FileReader(strPath));
+            do
+            {
+                sLine=bufferedReader.readLine();
+                if(sLine==null)
+                {
+                    break;
+                }
+                else
+                {
+                    sLine=sLine.replace("\"","");
+                    if((!(sLine.contains("Yes"))) && iCount==0)
+                    {
+                        cvsData=sLine.split(sCSVSplitBy);
+                        sColValue=cvsData[iColNum];
+                        sRetnCellValue=sColValue.trim();
+                        cvsRecord=new  String[]{sRetnCellValue,"Yes"};
+                        iCount++;
+
+                    }
+                    else
+                    {
+                        cvsRecord=sLine.split(sCSVSplitBy);
+                    }
+                }
+                iRowNum++;
+                csvBody.add(cvsRecord);
+            }
+            while ((sLine!=null)&& iRowNum>1);
+            if (sRetnCellValue==null)
+            {
+                Utils.addLog("FAIL","Need to add data to the csv file");
+            }
+            else
+            {
+                Utils.addLog("INFO","data found "+sRetnCellValue);
+            }
+            bufferedReader.close();
+
+        }
+        catch (Exception e)
+        {
+            Utils.addLog("FAIL",e.getMessage());
+        }return sRetnCellValue;
     }
 }
 

@@ -12,8 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PageClassTest extends Base {
     WebDriver drivr;
-    @FindBy (how = How.XPATH ,using = "//a[contains(@href,'https://demoqa.com')]")
-    public WebElement btnJoinUs;
+    @FindBy (how = How.XPATH ,using = "(//small[text()='http://www.phptravels.net/login'])[1]")
+    public WebElement linkCustomerFrontEnd;
 
     /***************************************
     Method Name :LaunchPage
@@ -27,23 +27,23 @@ public class PageClassTest extends Base {
     }
 
     /***************************************
-     Method Name :joinNow
+     Method Name :navigateToCustomerFrontEndPage
      Parameter:
-     Description by: method to click on join now
+     Description by: method to click on navigateToCustomerFrontEndPage and navigate to Customer Front end login Page
      ****************************************/
-    public void clickJoinNow()
+    public boolean navigateToCustomerFrontEndPage()
     {
-        /*boolean bReturn=false;
+        boolean bReturn=false;
         try
-        {*/
+        {
             SeleniumWaits.performdelay(5);
-             BrowserFunctions.webElementClick(btnJoinUs,"Join Us");
-       /* }
+             BrowserFunctions.webElementClick(linkCustomerFrontEnd,"navigated to the page Successfully");
+       }
         catch (Exception e)
         {
             Utils.exceptioHandler(e);
         }
-        return  bReturn;*/
+        return  bReturn;
     }
 
 

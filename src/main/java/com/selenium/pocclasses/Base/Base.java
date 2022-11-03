@@ -8,6 +8,7 @@ import com.selenium.pocclasses.DataProvider.DpSQLServer;
 import com.selenium.pocclasses.UtilityFunctions.SeleniumWaits;
 import com.selenium.pocclasses.UtilityFunctions.Utils;
 import org.apache.logging.log4j.LogManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -77,7 +78,8 @@ public class Base {
                     prefs.put("profile.default_content_settings_values.notifications",2);
                     if(System.getProperty("os.name").toLowerCase().contains("windows"))
                     {
-                        System.setProperty("webdriver.chrome.driver",objDpConfig.getCurrentDirectory() + objDpConfig.getConfigData("ChromeDriverPath"));
+                        drivr=WebDriverManager.chromedriver().capabilities(cOptions).create();
+                        //System.setProperty("webdriver.chrome.driver",objDpConfig.getCurrentDirectory() + objDpConfig.getConfigData("ChromeDriverPath"));
                     }
                     else
                     {
@@ -109,7 +111,8 @@ public class Base {
 
                 }
                 case "IE":{
-                    drivr=new InternetExplorerDriver();
+                    //drivr=new InternetExplorerDriver();
+                    drivr=WebDriverManager.iedriver().create();
                     break;
                 }
                 default:

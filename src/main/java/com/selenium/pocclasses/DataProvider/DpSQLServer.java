@@ -5,7 +5,9 @@ import com.selenium.pocclasses.UtilityFunctions.Utils;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DpSQLServer {
     /*****************************
@@ -153,6 +155,74 @@ public class DpSQLServer {
         {
             Utils.addLog("FAIL"," pushResultToSQLServer "+e.getMessage());
         }
+
     }
+    /***************************************************************************************************
+     Method Name: getIccidFromTDMResult
+     Paramater : NA
+     Description :This method is used to fetch the ICCID from TDM
+     **********************************************************************************/
+
+    public  static List<String> getICCIDFromTDMResult()
+    {
+        Connection connConnection=null;
+        Statement stmtStatement=null;
+        String sQuery=null;
+        List<String> lst=new ArrayList<>();
+        try
+        {
+            connConnection=DriverManager.getConnection("jdbc:sqlserver://MER1-TQASQLTDM1\\TDM2;databaseName=RW_DOP;user=Services_User;Password=xyz");
+           sQuery="select* from tabke" ;
+           Utils.addLog("Info","Query:"+sQuery);
+           Statement stmt= connConnection.createStatement();
+           ResultSet res=stmt.executeQuery(sQuery);
+           ResultSetMetaData rsmd=res.getMetaData();
+           while(res.next())
+           {
+               for (int i=1;i<=rsmd.getColumnCount();i++)
+               {
+                   lst.add(res.getString(i));
+
+               }
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  lst;
+    }
+    /***************************************************************************
+     Method Name: updateICCIDFromTdm
+     Parameter:value
+     Description BY:
+     ******************************************************************************/
+    public void updateICCIDFromTDM(String value)
+    {
+        Connection connConnection=null;
+        Statement stmtStatement=null;
+        String sQuery=null;
+        try{
+            Class.forName("com.microsoft.SQLServerDriver");
+        }
+        catch (Exception e)
+        {
+            Utils.addLog("FAIL",e.getMessage());
+        }
+        try {
+            connConnection=DriverManager.getConnection("Update * From where ICCID='"+value+"'");
+            sQuery="";
+            Utils.addLog("INFO","QUERY:" +sQuery);
+            stmtStatement =connConnection.createStatement();
+            ResultSet rs=stmtStatement.executeQuery(sQuery);
+            stmtStatement.close();
+            connConnection.close();
+
+        }
+        catch ( SQLException e)
+        {
+            Utils.addLog("FAIL","SQLException:"+e.getMessage());
+        }
+    }
+
+
 }
 
